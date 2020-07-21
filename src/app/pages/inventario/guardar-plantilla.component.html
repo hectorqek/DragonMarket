@@ -1,0 +1,55 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div id="guardarPlantilla" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title text-white">Plantillas Disponibles </h4>
+                <button type="button" class="close" (click)="cerrarModalPlantilla()" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Seleccione una Plantilla Disponible</h4>
+                                <h6 class="card-subtitle">Aquí usted podrá crear una nueva plantilla o sobrescribir el contenido de una</h6>
+                                <form (ngSubmit)="crearPlantilla(formularioNuevaPlantilla); formularioNuevaPlantilla.resetForm()" #formularioNuevaPlantilla="ngForm" novalidate="" autocomplete="off">
+                                    <div class="form-row" [ngClass]="{'has-danger': (nombrePlantilla.errors?.minlength || nombrePlantilla.errors?.required) && nombrePlantilla.touched }">
+                                        <div class="col-9">
+                                            <input class="form-control" type="text" placeholder="Nombre" minlength="5" maxlength="50" name="NombrePlantilla" ngModel required #nombrePlantilla="ngModel">
+                                            <div *ngIf="nombrePlantilla.touched && !nombrePlantilla.valid">
+                                                <div *ngIf="nombrePlantilla?.errors?.required" class="form-control-feedback"> Este campo es requerido</div>
+                                                <div *ngIf="nombrePlantilla?.errors?.minlength" class="form-control-feedback"> Este campo requiere minimo {{nombrePlantilla?.errors.minlength.requiredLength}} caracteres</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <button [disabled]="!formularioNuevaPlantilla.valid" type="submit" class="btn btn-info"><span><i class="fa fa-save"></i> Crear Plantilla </span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre Actual</th>
+                                                <th>Cargar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let plantilla of ListaPlantillas">
+                                                <td><input class="form-control" [(ngModel)]="plantilla.NombrePlantilla"></td>
+                                                <td><button type="button" class="btn btn-primary" (click)="sobreescribirPlantilla(plantilla.IdPlantilla, plantilla.NombrePlantilla)"><i class="fa fa-upload"></i> Sobreescribir</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

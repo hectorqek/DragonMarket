@@ -1,0 +1,88 @@
+<!-- <app-loader [loader]="isLoading"> </app-loader> -->
+<div id="crearTitular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h4 class="modal-title text-white">Crear Titular </h4>
+        <button type="button" class="close" (click)="cerrarModalCrearTitular()" data-dismiss="modal">×</button>
+      </div>
+      <form (ngSubmit)="crearTitular(formularioTitular); " #formularioTitular="ngForm"
+        novalidate="" autocomplete="off">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group row">
+                <label class="col-2 col-form-label">* Tipo Identificación</label>
+                <div class="col-3">
+                  <select tabindex="0" autofocus="autofocus" id="tipoIdentificacion" [(ngModel)]="defaultOption" #tipoIdentificacion="ngModel" class="form-control col-12"  name="tipoIdentificacion"
+                  [ngClass]="{ 'has-danger': tipoIdentificacion.invalid }" >
+                  <option [value]="null">Seleccione...</option>            
+                    <option [value]="est.Valor" *ngFor="let est of dominio">{{est.Descripcion}}</option>
+                  </select>
+                  <!-- <div *ngIf="tipoIdentificacion.invalid" class="invalid-text">
+                    <div *ngIf="tipoIdentificacion?.errors?.required">Gender is required</div>
+                  </div> -->
+                </div>
+                <label class="col-2 col-form-label">* No. Identificación</label>
+                <div class="col-3" [ngClass]="{'has-danger': (noIdentificacion.errors?.minlength || noIdentificacion.errors?.required) && noIdentificacion.touched }">
+                  <input autofocus class="form-control" type="text" placeholder="Identificación" minlength="5" maxlength="20"
+                   id="noIdentificacion" name="noIdentificacion" ngModel required #noIdentificacion="ngModel">
+                    <div *ngIf="noIdentificacion.touched && !noIdentificacion.valid">
+                      <div *ngIf="noIdentificacion?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                      <div *ngIf="noIdentificacion?.errors?.minlength" class="form-control-feedback"><small>Ingrese mínimo {{noIdentificacion?.errors.minlength.requiredLength}} caracteres </small> </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label">* Nombres</label>
+                <div class="col-3" [ngClass]="{'has-danger': (nombres.errors?.minlength || nombres.errors?.required) && nombres.touched }">
+                  <input id="nombres" class="form-control" type="text" minlength="2" maxlength="50" placeholder="Nombres" name="nombres"
+                    ngModel required #nombres="ngModel">
+                    <div *ngIf="nombres.touched && !nombres.valid">
+                      <div *ngIf="nombres.errors.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                      <div *ngIf="nombres?.errors?.minlength" class="form-control-feedback"><small>Ingrese mínimo {{nombres?.errors.minlength.requiredLength}} caracteres </small> </div>
+                  </div>
+                </div>
+                <label class="col-2 col-form-label">* Apellidos</label>
+                <div class="col-3" [ngClass]="{'has-danger': (apellidos.errors?.minlength || apellidos.errors?.required) && apellidos.touched }">
+                  <input id="apellidos" class="form-control" minlength="2" maxlength="50" type="text" placeholder="Apellidos"
+                    name="apellidos" ngModel required #apellidos="ngModel">
+                    <div *ngIf="apellidos.touched" class="invalid-text">
+                      <div *ngIf="apellidos?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                      <div *ngIf="apellidos?.errors?.minlength" class="form-control-feedback"><small>Ingrese mínimo {{apellidos?.errors.minlength.requiredLength}} caracteres </small> </div>
+                  </div >
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-2 col-form-label">* Correo Electrónico</label>
+                <div class="col-3">
+                  <input class="form-control" minlength="0" maxlength="100" type="text" placeholder="Correo Electrónico"
+                    name="userName" ngModel required email #userName="ngModel" [ngClass]="{ 'has-danger': userName.errors?.required }">
+                    <!-- <div *ngIf="userName.touched" class="invalid-text">
+                      <div *ngIf="userName.errors?.required" class="has-danger"><small>Este campo es requerido</small> </div>
+                      <div *ngIf="userName.errors.email">Email must be a valid email address</div> 
+                    </div> -->
+                </div>
+                <label class="col-2 col-form-label">Estado</label>
+                <div class="col-3">
+                <ui-switch [checked]="true" checkedLabel="Activo" uncheckedLabel="Inactivo" (valueChange)="onValueChange($event)"
+                name="Estado" ngModel #Estado="ngModel">
+                </ui-switch>
+                   </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="col-12">
+          <button [disabled]="!formularioTitular.valid" type="submit" class="btn btn-info waves-effect waves-light">
+            <span><i class="fa fa-save"></i> Crear Titular </span></button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+</div>

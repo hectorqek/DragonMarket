@@ -1,0 +1,59 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div id="reglaAgregarItemVenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title text-white">Agregar producto ({{nombreCliente}} {{apellidoCliente}} - {{nombreBolsillo}})</h4>
+                <button type="button" (click)="cerrarModalReglaAgregarItemVenta()" class="close"
+                    data-dismiss="modal">×</button>
+            </div>
+            <form (ngSubmit)="agregarReglaItemVenta(formularioItemVenta)" #formularioItemVenta="ngForm" novalidate=""
+                autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <ng-multiselect-dropdown [placeholder]=" '(*) Seleccionar Productos' "
+                                    name="productosSeleccionados " [data]="itemsVenta " required
+                                    [(ngModel)]="productosSeleccionados " [settings]="dropdownProductosSettings
+                                    " (onDeSelect)="onDeSelect($event) " (onSelect)="onItemSelect($event) "
+                                    (onSelectAll)="onSelectAll($event)" (onDeSelectAll)=" onDeSelectAll($event) ">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div *ngIf="productosSeleccionadosconCantidad.length> 0" class="row ">
+                                <div class="col-12 table-responsive ">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre del Producto</th>
+                                                <th class="text-center">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of productosSeleccionadosconCantidad ">
+                                                <td><span>{{item.Nombre}}</span></td>
+                                                <td><input class="form-control text-center " name="Cantidad "
+                                                        #Cantidad="ngModel" [(ngModel)]="item.Valor " type="number "
+                                                        [min]="0 " [max]="1000000 " [step]="1000 " pattern="^[0-9]+
+                                        " tabindex="1 " /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <div class="row ">
+                        <div class="col-12 ">
+                            <button type="submit" [disabled]="!botonGuardar"
+                                class="btn btn-block btn-lg btn-info "> <span><i class="fa fa-save "></i>Agregar</span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

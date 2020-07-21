@@ -1,0 +1,22 @@
+<router-outlet></router-outlet>
+<div class="body-pos">
+    <section class="contenedor-principal">
+        <aside class="sidebar-categoria">
+            <app-categorias (categoriaSeleccionada)="categoriaSeleccionada( $event )"></app-categorias>
+        </aside>
+        <main class="contenido-principal">
+            <app-productos [categoriaSeleccionada]="idCategoriaSeleccionada"></app-productos>
+            <router-outlet></router-outlet>
+        </main>
+        <aside class="sidebar-venta">
+            <app-cliente></app-cliente>
+            <app-venta></app-venta>
+        </aside>
+    </section>
+    <footer class="footer footer-pos ">
+        <div class="text-center">
+            <small>Nombre POS: {{infoPOS.NombrePos}} - Id PeriodoTrabajo: {{infoPOS.IdPeriodoTrabajo}}  - Estado: {{infoPOS.Estado}} - Menu: {{infoPOS.NombreMenu}}</small>
+        </div>
+    </footer>
+    <app-venta-confirmacion></app-venta-confirmacion>
+</div>

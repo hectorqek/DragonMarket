@@ -1,0 +1,29 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="col-12 ">
+        <div class="row page-titles">
+            <div class="col-12 align-self-center">
+                <h3>Ordenar Productos</h3>
+                <small>Seleccione un producto, presione las flecha según su necesidad para ubicarlo en la posición que desea. Luego presione el botón "Actualizar Orden"</small>
+            </div>
+        </div>
+        <div class="card ">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ngx-sortable [items]="productos" [listStyle]="listStyle" [name]="''" (listSorted)="listSorted($event)">>
+                            <ng-template let-item>
+                                <div class="sortable-list-item">
+                                    {{item.NombreProducto}}
+                                </div>
+                            </ng-template>
+                        </ngx-sortable>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary m-t-20 pull-right" (click)="actualizarOrden()"> Actualizar Orden </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

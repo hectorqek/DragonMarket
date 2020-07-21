@@ -1,0 +1,39 @@
+<div class="row ">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example23 " class="display nowrap table table-striped table-bordered inventario " cellspacing="0 " width="100% ">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Nombre POS</th>
+                                <th class="text-center">Estado Actual</th>
+                                <th class="text-center">Víncular POS </th>
+                                <th class="text-center">Verificacion</th>
+                                <th class="text-center">Desvincular POS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let item of listaPOS">
+                                <td class="text-center">{{item.IdPos}}</td>
+                                <td>{{item.NombrePos | capitalize}}</td>
+                                <td class=" text-center ">{{ item.Estado }} </td>
+                                <td class=" text-center ">
+                                    <button class="btn btn-primary waves-effect btn-circle waves-light" type="button" (click)="guardarPOS(item.IdPos)"> <i class="fa fa-link"></i> </button>
+                                </td>
+                                <td class="text-center">
+                                    <p *ngIf="item.IdPos === idPOSlocal"> Sí </p>
+                                    <p *ngIf="item.IdPos !== idPOSlocal"> No </p>
+                                </td>
+                                <td class=" text-center ">
+                                    <button class="btn btn-youtube waves-effect btn-circle waves-light" type="button" (click)="consultarPOS()"> <i class="fa fa-unlink"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

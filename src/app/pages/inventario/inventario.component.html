@@ -1,0 +1,62 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="col-12 ">
+        <div class="card ">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card-title">
+                            <h4><small>Kiosco Seleccionado:</small> Bodega Central</h4>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                <input type="text" class="form-control" [(ngModel)]="valorBusqueda" placeholder="Filtrar Productos" (keyup)="buscarProducto(buscar.value)" #buscar>
+                                <span id="searchclear" class="fa fa-times-circle-o" (click)="buscar.value=''; buscarProducto(buscar.value)"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="example23 " class="display nowrap table table-striped table-bordered inventario " cellspacing="0 " width="100% ">
+                        <thead>
+                            <tr>
+                                <th>Nombre de Producto</th>
+                                <th class="text-center">Cantidad Actual</th>
+                                <th class="text-center">Agregar </th>
+                                <th class="text-center">Retirar</th>
+                                <th class="text-center">Cantidad Final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor=" let item of inventario ; let i= index ">
+                                <td>{{item.NombreProducto | capitalize}}</td>
+                                <td class=" text-center ">{{item.Cantidad | number }} </td>
+                                <td class=" text-center ">
+                                    <input class="form-control text-center campo_inventario " name="NuevaCantidad " min="0" max="9999" pattern="^[0-9]+" [(ngModel)]="item.AgregarCantidad" #agregarCantidad (click)="agregarCantidad.select()" type="number" (blur)="actualizarCantidadFinal(item); "
+                                        tabindex="1" />
+                                </td>
+                                <td class=" text-center ">
+                                    <input class="form-control text-center campo_inventario" name="NuevaCantidad " min="0" max="9999" pattern="^[0-9]+" [(ngModel)]="item.RetirarCantidad" #retirarCantidad (click)="retirarCantidad.select()" type="number" (blur)="actualizarCantidadFinal(item);"
+                                        tabindex="3" />
+                                </td>
+                                <td class=" text-center ">
+                                    <div *ngIf="item.CantidadFinal >= 0">
+                                        <p>{{item.CantidadFinal}}</p>
+                                    </div>
+                                    <div *ngIf="item.CantidadFinal < 0">
+                                        <b class="text-danger">{{item.CantidadFinal}}</b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <button class="btn btn-lg btn-primary pull-right" [disabled]="vacio" (click)='actualizarInventario()' tabindex="2"> Guardar </button>
+            </div>
+        </div>
+    </div>
+</div>

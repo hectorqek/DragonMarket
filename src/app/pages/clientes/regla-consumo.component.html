@@ -1,0 +1,71 @@
+
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="col-12">
+        <div class="row page-titles">
+            <div class="col-md-6 align-self-center">
+                <h3>Limitar consumo de alimentos por día</h3>
+                <small>Productos a los que el cliente tiene un límite de consumo diario.</small>
+            </div>
+        </div>
+        <div class=" card ">
+            <div class="card-body ">
+                <div class="table-responsive ">
+                    <table class="table">
+                        <tbody *ngFor=" let cliente of clienteReglaConsumo">
+                            
+                            <tr class="bg-primary">
+                                <th colspan="3">
+                                    <h5 class="m-b-0 text-white text-left">{{ cliente.NombreCliente}}
+                                        {{cliente.ApellidoCliente}}</h5>
+                                </th>
+                                <th>
+                                    <h5 class="m-b-0 text-white text-left">Cliente No. {{cliente.IdCliente}}</h5>
+                                </th>
+                            </tr>
+                            <ng-container *ngFor="let bolsillo of cliente.Bolsillos ">
+                                  
+                                <tr class="table-active">
+                                    <td colspan="3">
+                                        <h4 class="bold ">{{bolsillo.NombreBolsillo}}</h4>
+                                    </td>
+                                    <td colspan="1"><button type="button" class="btn btn-primary btn-xs"
+                                            (click)="abrirModalAgregarItemVenta(cliente.IdCliente, bolsillo.IdBolsillo, cliente.NombreCliente, cliente.ApellidoCliente, bolsillo.NombreBolsillo)">
+                                            Agregar producto</button></td>
+                                </tr>
+                                <tr class="bg-light-info"  *ngIf="bolsillo.ReglaConsumo.length > 0; else sinProductos">
+                                    <td class="">Nombre del Producto</td>
+                                    <td class="text-center">Límite por día</td>
+                                    <td class="text-center">Editar</td>
+                                    <td class="text-center">Eliminar</td>
+                                </tr>
+                                <ng-template #sinProductos>
+                                    No posee productos agregados.
+                                  </ng-template>
+                                <tr *ngFor="let reglas of bolsillo.ReglaConsumo ">
+                                    <td class="">{{reglas.NombreItemVenta}}</td>
+                                    <td class="text-center ">
+                                        <input class="form-control text-center redistribucion-saldo"
+                                            [(ngModel)]="reglas.MontoItem" maxlength="100" type="number" [min]="0" [max]="100"
+                                            [step]="1" pattern="^[0-9]+" tabindex="1"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-primary btn-xs"
+                                            (click)="actualizarReglaConsumoItemVenta(cliente.IdCliente, bolsillo.IdBolsillo, reglas.IdRegla, reglas.MontoItem, reglas.EstadoRegla, reglas.IdItemVenta, 1)"><i
+                                                class="fa fa-save"></i> </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-primary btn-xs"
+                                            (click)="eliminarReglaConsumoItemVenta(cliente.IdCliente, bolsillo.IdBolsillo, reglas.IdRegla, reglas.MontoItem, reglas.EstadoRegla, reglas.IdItemVenta)"><i
+                                                class="fa fa-remove"></i> </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-regla-agregar-item-venta #ReglaConsumoGuardar [reglaConsumo]="reglaConsumo" ></app-regla-agregar-item-venta>

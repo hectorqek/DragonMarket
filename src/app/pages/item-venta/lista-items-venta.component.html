@@ -1,0 +1,58 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="col-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Filtrar Item de Venta" (keyup)="buscarItemVenta(buscar.value)" #buscar>
+                <span id="searchclear" class="fa fa-times-circle-o" (click)="buscar.value=''; buscarItemVenta(buscar.value)"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="m-b-20 text-center">
+            <button type="button" tabindex="2" class="btn btn-success pull-right waves-effect waves-light" (click)="abrirModalCrearProducto()"><i class="fa fa-edit"></i> Crear Item de Venta</button>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="display nowrap table table-striped table-bordered inventario " cellspacing="0 " width="100% ">
+        <thead>
+            <tr>
+                <th class="text-center"><small>Estado </small> </th>
+                <th><small>Imagen </small></th>
+                <th><small>Nombre Item Venta</small></th>
+                <th class="text-center"><small>Precio Venta</small></th>
+                <th class="text-center"><small>Precio Especial</small> </th>
+                <th class="text-center"><small>Precio <br />Descuento </small></th>
+                <th class="text-center"><small>Activar <br /> Descuento</small></th>
+                <th class="text-center"><small>Editar </small> </th>
+                <th class="text-center"><small>Guardar </small></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let item of itemsVenta ; let i= index ">
+                <td class=" text-center">
+                    <button type="button" class="btn btn-xs" [ngClass]="{'btn-info': item.EstadoItemVenta === true, 'btn-outline-danger': item.EstadoItemVenta === false }" (click)="item.EstadoItemVenta = !item.EstadoItemVenta"> <span *ngIf="item.EstadoItemVenta == true"> <i class="fa fa-eye"></i> </span> <span *ngIf="item.EstadoItemVenta == false"> <i class="fa fa-eye-slash"></i> </span>  </button>
+                </td>
+                <td class="text-center">
+                    <img width="35" class="" [src]="item.Imagen | sinfoto" onError="this.src='assets/images/sinfoto.jpg' " />
+                </td>
+                <td>{{item.Nombre | capitalize}}</td>
+                <td class=" text-center "><input class="form-control text-center" [(ngModel)]="item.PrecioVenta" type="number" placeholder="0" /> </td>
+                <td class=" text-center "><input class="form-control text-center" [(ngModel)]="item.PrecioEspecial" type="number" placeholder="0" /></td>
+                <td class=" text-center"><input class="form-control text-center" [(ngModel)]="item.PrecioDescuento" type="number" placeholder="0" /></td>
+                <td class=" text-center">
+                    <button class="btn btn-xs" [ngClass]="{'btn-info': item.EstadoDescuento === true, 'btn-outline-danger': item.EstadoDescuento === false }" (click)="item.EstadoDescuento = !item.EstadoDescuento"> <span *ngIf="item.EstadoDescuento == true"> <i class="fa fa-check"></i> </span> <span *ngIf="item.EstadoDescuento == false"> <i class="fa fa-times"></i> </span>  </button>
+                </td>
+                <td class=" text-center "><button type="button" class="btn btn-xs btn-primary" (click)="prueba = true; abrirModalEditarItemVenta(item)">Editar</button>
+                </td>
+                <td class=" text-center "> <button type="button" (click)="editarProducto(item)" class="btn btn-xs btn-primary">Guardar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="itemsVenta.length > 0">
+    <app-editar-item-venta #EditarItemVenta [itemVentaEditar]="itemVentaEditar"></app-editar-item-venta>
+</div>

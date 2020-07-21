@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Filtrar Productos" (keyup)="buscarProducto(buscar.value)" #buscar>
+                <span id="searchclear" class="fa fa-times-circle-o" (click)="buscar.value=''; buscarProducto(buscar.value)"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <button type="button" tabindex="2" class="btn btn-info col-12 waves-effect waves-light" (click)="abrirModalCrearProducto()"><i class="fa fa-edit"></i> Crear Producto</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered inventario " cellspacing="0 ">
+                <thead>
+                    <tr>
+                        <th>Nombre de Producto</th>
+                        <th class="text-center">SKU</th>
+                        <th class="text-center">Perecedero </th>
+                        <th class="text-center">Descripción </th>
+                        <th class="text-center">Editar </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor=" let item of productos ; let i= index ">
+                        <td>{{item.NombreProducto | capitalize}}</td>
+                        <td class=" text-center ">{{item.SKU }} </td>
+                        <td class=" text-center ">{{item.Perecedero}}
+                        </td>
+                        <td class=" text-center">{{item.Descripcion | capitalize}}
+                        </td>
+                        <td class=" text-center ">
+                            <button class="btn btn-xs btn-dribbble" (click)="abrirModalEditarProducto(item)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div *ngIf="productoEditar !== undefined">
+    <app-editarproducto #EditarProducto [productoEditar]="productoEditar"></app-editarproducto>
+
+</div>

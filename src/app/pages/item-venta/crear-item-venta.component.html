@@ -1,0 +1,115 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div id="crearItemVenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title text-white">Crear de Item Venta</h4>
+                <button type="button" (click)="cerrarModalCrearItemVenta()" class="close" data-dismiss="modal">×</button>
+            </div>
+            <form (ngSubmit)="crearItemVenta(formularioItemVenta); formularioItemVenta.resetForm()" #formularioItemVenta="ngForm" novalidate="" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">Nombre</label>
+                                <div class="col-3" [ngClass]="{'has-danger': (nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }">
+                                    <input class="form-control" type="text" placeholder="Ej. Pizza" minlength="3" maxlength="50" name="Nombre" ngModel required #nombre="ngModel">
+                                    <div *ngIf="nombre.touched && !nombre.valid">
+                                        <div *ngIf="nombre?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                                        <div *ngIf="nombre?.errors?.minlength" class="form-control-feedback"><small>Ingrese minimo {{nombre?.errors.minlength.requiredLength}} caracteres </small> </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <label class="col-form-label">Activar/Desactivar</label>
+                                </div>
+                                <div class="col-3">
+                                    <ui-switch size="small" [checked]="false" checkedLabel="Sí" uncheckedLabel="No" name="EstadoItemVenta" ngModel #EstadoItemVenta="ngModel"></ui-switch>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">Precio Venta</label>
+                                <div class="col-3" [ngClass]="{'has-danger': (PrecioVenta.errors?.minlength || PrecioVenta.errors?.required) && PrecioVenta.touched }">
+                                    <input class="form-control" type="number" minlength="0" min="0" maxlength="20" placeholder="0" name="PrecioVenta" required ngModel #PrecioVenta="ngModel">
+                                    <div *ngIf="PrecioVenta.touched && !PrecioVenta.valid">
+                                        <div *ngIf="nombre?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                                        <div *ngIf="PrecioVenta?.errors?.minlength" class="form-control-feedback"><small> Ingrese minimo {{PrecioVenta?.errors.minlength.requiredLength}} caracteres </small></div>
+                                    </div>
+                                </div>
+                                <label class="col-3 col-form-label">Precio Especial</label>
+                                <div class="col-3" [ngClass]="{'has-danger': (PrecioEspecial.errors?.minlength || PrecioEspecial.errors?.required) && PrecioEspecial.touched }">
+                                    <input class="form-control" type="number" minlength="0" maxlength="20" min="0" placeholder="0" name="PrecioEspecial" required ngModel #PrecioEspecial="ngModel">
+                                    <div *ngIf="PrecioEspecial.touched && !PrecioEspecial.valid">
+                                        <div *ngIf="PrecioEspecial?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                                        <div *ngIf="PrecioEspecial?.errors?.minlength" class="form-control-feedback"><small>Ingrese minimo {{PrecioEspecial?.errors.minlength.requiredLength}} caracteres</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label">Precio Descuento</label>
+                                <div class="col-3" [ngClass]="{'has-danger': (PrecioDescuento.errors?.minlength || PrecioDescuento.errors?.required) && PrecioDescuento.touched }">
+                                    <input class="form-control" type="number" minlength="0" min="0" maxlength="20" placeholder="0" name="PrecioDescuento" required ngModel #PrecioDescuento="ngModel">
+                                    <div *ngIf="PrecioDescuento.touched && !PrecioDescuento.valid">
+                                        <div *ngIf="PrecioDescuento?.errors?.required" class="form-control-feedback"><small>Este campo es requerido</small> </div>
+                                        <div *ngIf="PrecioDescuento?.errors?.minlength" class="form-control-feedback"><small> Ingrese minimo {{PrecioDescuento?.errors.minlength.requiredLength}} caracteres</small></div>
+                                    </div>
+                                </div>
+                                <label class="col-3 col-form-label">Activar/Desactivar</label>
+                                <div class="col-3">
+                                    <ui-switch size="small" [checked]="false" checkedLabel="Sí" uncheckedLabel="No" name="EstadoDescuento" ngModel #EstadoDescuento="ngModel"></ui-switch>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <ng-multiselect-dropdown [placeholder]=" '(*) Seleccionar Productos' " name="productosSeleccionados " [data]="productos " required [(ngModel)]="productosSeleccionados " [settings]="dropdownProductosSettings
+                                    " (onDeSelect)="onDeSelect($event) " (onSelect)="onItemSelect($event) " (onSelectAll)="onSelectAll($event)" (onDeSelectAll)=" onDeSelectAll($event) ">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div *ngIf="productosSeleccionadosconCantidad.length> 0" class="row ">
+                                <div class="col-12 table-responsive ">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre Producto</th>
+                                                <th class="text-center">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of productosSeleccionadosconCantidad ">
+                                                <td><span>{{item.NombreProducto}}</span></td>
+                                                <td><input class="form-control text-center " name="Cantidad " #Cantidad="ngModel" [(ngModel)]="item.Cantidad " type="number " [min]="0 " [max]="1000000 " [step]="1000 " pattern="^[0-9]+
+                                        " tabindex="1 " /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <ng-multiselect-dropdown [placeholder]=" '(*) Seleccionar Categoria' " name="categoriasSeleccionadas " [data]="categorias " required [(ngModel)]="categoriasSeleccionadas " [settings]="dropdownCategoriasSettings
+                                    ">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="form-group ">
+                                <ng-multiselect-dropdown [placeholder]=" '(*) Seleccionar Menu' " name="menusSeleccionados " [data]="menus " required [(ngModel)]="menusSeleccionados " [settings]="dropdownMenusSettings ">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-12 ">
+                            <image-upload [url]=" 'https://dragonmarketapi.sgs.edu.co/api/DocumentUpload?tipoImagen=dragonmarket' " [fileTooLargeMessage]=" 'Imagen Muy Pesada' " required [clearButtonCaption]=" 'Limpiar' " [extensions]="[ 'jpeg', 'png', 'jpg'] " [max]="1
+                                    " [buttonCaption]=" 'Seleccionar Foto' " [dropBoxMessage]=" 'Arrestre foto aquí!' " (uploadFinished)="onUploadFinished($event) " (uploadStateChanged)="onUploadStateChanged($event) " (removed)="onRemoved($event) ">
+                            </image-upload>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer ">
+                    <div class="row ">
+                        <div class="col-12 ">
+                            <button [disabled]="this.urlImagen==null " type="submit " class="btn btn-block btn-lg btn-info "> <span><i class="fa fa-save "></i> Crear Item de Venta </span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-body">
+        <h3>Reversión Recargas</h3>
+        <small>Realice la búsqueda del cliente, al cual desea realizar la reversión de la recarga mediante los siguientes criterios:  <span class="text-muted">(Nombre, Apellido o Número de Identificación)</span></small>
+        <div class="Recarga p-30">
+            <div class=" login-box form-horizontal form-material">
+                <div class="form-group">
+                    <div class="consultaCliente">
+                        <div class="social-widget ">
+                            <div class="soc-header box-title bg-primary">
+                                <h4 class="text-white"> Buscar Clientes <i class="fa fa-search"></i> </h4>
+                            </div>
+                            <div class="soc-content consultaClienteCuerpo">
+
+                                <div class="input-group">
+                                    <input class="form-control text-center" type="text" [(ngModel)]="ClientName" (keyup)="buscarCliente(ClientName)" placeholder="Ingrese criterio de búsqueda" #buscar />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-result" *ngIf="flag">
+                        <ul class="list-group">
+                            <li *ngFor="let cliente of clients | async" class="list-group-item list-group-item-action flex-column">
+                                <div class="resultado_busqueda_cliente">
+                                    <img class="perfilImage d-flex mr-3" [src]="cliente.Imagen" />
+                                    <a (click)="seleccionarUsuario(cliente.IdCliente)">{{cliente.NombreCompleto}}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-12">
+                <h3 card="card-title">Historial Recargas</h3>
+                <small>Consulte el historial de las últimas recargas realizadas, de todos los usuarios</small>
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">No. Recarga</th>
+                            <th class="text-center">Fecha Recarga</th>
+                            <th class="text-center">Nombre Cliente</th>
+                            <th class="text-center">Valor Recarga</th>
+                            <th class="text-center">Medio de Recarga</th>
+                            <th class="text-center">Reversar Recarga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of historialRecarga">
+                            <td class="text-center">{{item.IdRecarga}}</td>
+                            <td class="text-center">{{item.FechaRecarga}}</td>
+                            <td class="text-center">{{item.NombreCliente}}</td>
+                            <td class="text-center">{{item.ValorRecarga | currency:'USD':'symbol':'3.0'}} </td>
+                            <td class="text-center"><i class="fa" [ngClass]="(item.Medio === 'Tarjeta Crédito/Débito')?'fa-credit-card':'fa-money'">
+                  </i><span class="m-l-5">{{item.Medio}}</span></td>
+                            <td class="text-center"><button type="button" (click)="reversarRecargar(item.IdRecarga)" class="btn btn-outline-primary">Reversar
+                    </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

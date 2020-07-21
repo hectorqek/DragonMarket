@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+  <html lang="es">
+
+    <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="../../assets/css/log_in_css.css">
+      <title>Dragon Market</title>
+
+    </head>
+    <body>
+                        <!--modal politica privacidad final-->
+                          <div class="modal" id="politicaprivacidad">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h2 class="modal-title">Politica de privacidad</h2>
+                                  <button class="close" type="button" data-dismiss="modal">X</button>
+                                </div>
+
+                                <div class="modal-body">
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                  <br/>
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                  <br/>
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                </div>
+                                
+                              </div><!--end modal-content-->
+                              
+                            </div><!--end .modal-dialog-->
+                            
+                          </div><!--end .modal-->
+                          <!--modal politica privacidad final-->
+                          <!--modal Terminos de uso final-->
+                          <div class="modal" id="terminosuso">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h2 class="modal-title">Terminos de uso</h2>
+                                  <button class="close" type="button" data-dismiss="modal">X</button>
+                                </div>
+
+                                <div class="modal-body">
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                  <br/>
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                  <br/>
+                                  <p>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                  </p>
+                                </div>
+                                
+                              </div><!--end modal-content-->
+                              
+                            </div><!--end .modal-dialog-->
+                            
+                          </div><!--end .modal-->
+                          <!--modal terminos de uso final-->
+      
+                    <div class="container">
+                      <div class="row justify-content-center vertical-center">
+                        <div class="col-xl-6 col-lg-6 col-md-8 col-sm-8 col-xs-10 bg ">
+                          <div class="row justify-content-center text-center">
+                              <div class="col-12">
+                                <img id="imglogo" src="../../assets/images/background/campuskeylogo.png">
+                               <form class="form-container">
+                                <br/><br/>
+                                  <h1 class="">Bienvenido a Campuskey - Dragon Market</h1>
+                                  <br/><br/>
+                                  <h2  class="">Por favor seleccione su medio de autenticación</h2>
+                                  <br/><br/>
+                                  <p  style="text-align: center;"><a (click)="socialSignIn('facebook')" class="btn btn-1"><img style="float: left;" src="../../assets/images/background/facebook.png">  Sign in with Facebook</a></p>
+                                  <p  style="text-align: center;"><a (click)="socialSignIn('google')" class="btn btn-2"><img style="float: left;" src="../../assets/images/background/google.png">  Sign in with Google</a></p>
+                                  <p  style="text-align: center;"><a (click)="socialSignIn('office365')" class="btn btn-3"><img style="float: left;" src="../../assets/images/background/hotmail.png">  Sign in with Hotmail</a></p>
+                                  <p  style="text-align: center;"><a (click)="socialSignIn('office365')" class="btn btn-4"><img style="float: left;" src="../../assets/images/background/office365.png">  Sign in with Office 365</a></p>                                 
+
+                              </form>
+                              </div>
+                          </div>                     
+                           <div class="row row justify-content-center text-center">
+                            <div class="col-12">
+                              <br/>
+                                <footer>      
+                                 <div class="row  justify-content-center">
+
+                                  <div class="col-12 text-center">
+                <p>Copyright&copy; 2020 - Saint Jorge School - Todos los derechos reservados - <a href="#" data-toggle="modal" data-target="#politicaprivacidad">Politica de privacidad</a> - <a href="#" data-toggle="modal" data-target="#terminosuso">Terminos de uso</a> - Campuskey Versión: {{this.version}}</p>
+              </div>
+                                 </div>
+                                 </footer>
+                               </div>
+                             </div>
+                        </div>   
+                        </div>
+                    </div>
+       
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>    
+  </html>

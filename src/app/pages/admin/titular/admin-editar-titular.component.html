@@ -1,0 +1,63 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div id="editarTitular" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-lg ">
+      <div class="modal-content">
+          <div class="modal-header btn-dribbble">
+              <h4 class="modal-title text-white">Editar Titular</h4>
+              <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <form [formGroup]="frmTitular" #editarFormularioTitular="ngForm" (ngSubmit)="editarTitular()" novalidate=" ">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label class="col-2 col-form-label">* Tipo Identificación</label>
+                    <div class="col-3">
+                      <select disabled="true" class="form-control col-12" formControlName="tipoIdentificacion" [(ngModel)]="tipoIdClienteResponsable">
+                        <option value='-1'>Seleccione...</option>
+                        <option [value]="est.Valor" *ngFor="let est of dominio">{{est.Descripcion}}</option> 
+                      </select>
+                    </div>
+                    <label class="col-2 col-form-label">* No. Identificación</label>
+                    <div class="col-3">
+                      <input disabled="true" class="form-control" type="text" placeholder="Identificación" minlength="5" maxlength="50"
+                        name="NoIdentificacion" required formControlName="NoIdentificacion" [(ngModel)]="idClienteResponsable">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-2 col-form-label">* Nombres</label>
+                    <div class="col-3">
+                      <input class="form-control" type="text" minlength="2" maxlength="20" placeholder="Nombres"
+                      name="nombre" required formControlName="nombre"  [(ngModel)]="Nombres">                     
+                    </div>
+                    <label class="col-2 col-form-label">* Apellidos</label>
+                    <div class="col-3">
+                      <input class="form-control" minlength="0" maxlength="100" type="text" placeholder="Apellidos"
+                        name="apellido" required formControlName="apellido" [(ngModel)]="Apellidos">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-2 col-form-label">* Correo Electrónico</label>
+                    <div class="col-3">
+                      <input class="form-control" minlength="0" maxlength="100" type="text" placeholder="Correo Electrónico"
+                        name="username" email required formControlName="username" [(ngModel)]="Username">                      
+                    </div>
+                    <label class="col-2 col-form-label">Estado</label>
+                    <div class="col-3">
+                      <ui-switch formControlName="estado" checkedLabel="Activo" uncheckedLabel="Inactivo" size="small" [(ngModel)]="Estado"></ui-switch>
+                       </div>
+                </div>
+              </div>
+            </div>
+          </div>
+              <div class="modal-footer ">
+                  <div class="row ">
+                      <div class="col-12 ">
+                          <button [disabled]="!editarFormularioTitular.valid" type="submit " class="btn btn-block btn-lg btn-dribbble "> <span><i class="fa fa-save "></i> Modificar Titular </span></button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>

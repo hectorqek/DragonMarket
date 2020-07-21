@@ -1,0 +1,125 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row m-b-20">
+    <div class="col-12 ">
+        <div class="row page-titles m-b-0">
+            <div class="col-md-5 align-self-center">
+                <h3>Transferencias</h3>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control form-control-lg" [(ngModel)]="valorBusqueda" placeholder=" Filtrar Productos " (keyup)="buscarProducto(buscar.value) " #buscar>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card ">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-inline row p-10 m-0" [class.bg-light]="transferirdeBC">
+                            <div class="col-sm-12 col-md-3 form-group">
+                                <label class="custom-control custom-radio text-left">
+                                    <input type="radio" name="transferirdeBC"  [(ngModel)]="transferirdeBC" [value]="true" class="custom-control-input" (change)="tipoTransaccion($event, TKBC.value = null)">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Bodega Central</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-1">
+                                <span><i class="fa fa-arrow-circle-o-right"></i> </span>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <form #f="ngForm">
+                                    <select class="custom-control form-control" #TBCK [disabled]="!transferirdeBC" name="listaKioscos" (change)="consultarInventarioKiosco($event.target.value)">
+                                        <option value=null disabled selected>Seleccione un Kiosco</option>
+                                        <option *ngFor="let lista of listaKioscos" [value]="lista | json"> {{ lista.NombreKiosco}}</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <h2 class="text-center"> {{ nombreKioscoBCK }}</h2>
+                            </div>
+                        </div>
+                        <div class="m-2"></div>
+                        <div class="form-inline row p-10 m-0" [class.bg-light-info]="!transferirdeBC">
+                            <div class="col-sm-12 col-md-3 form-group">
+                                <label class="custom-control custom-radio text-left">
+                                    <input type="radio" name="transferiraBC" [(ngModel)]="transferirdeBC" [value]="false" class="custom-control-input" (change)="tipoTransaccion($event, TBCK.value = null )">
+                                    <span class="custom-control-indicator"></span>
+                                    <select class="custom-control form-control" #TKBC [disabled]="transferirdeBC"  name="listaKioscos2" (change)="consultarInventarioKiosco($event.target.value)">
+                                        <option value=null disabled selected>Seleccione un Kiosco</option>
+                                        <option *ngFor="let lista of listaKioscos" [value]="lista | json"> {{ lista.NombreKiosco}}</option>
+                                    </select> 
+                                </label>
+                            </div>
+                            <div class="col-sm-12 col-md-1">
+                                <span><i class="fa fa-arrow-circle-o-right"></i></span>
+                            </div>
+                            <div class="col-sm-12 col-md-4">
+                                <span class="custom-control-description">Bodega Central</span>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <h2 class="text-center"> {{ nombreKioscoKBC }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 "></div>
+                <div class="row ">
+                    <div class="col-sm-12 col-12 ">
+                        <div class="table-responsive transferencias">
+                            <table class="table table-hover table-bordered inventario" cellspacing="0 ">
+                                <thead class="">
+                                    <tr>
+                                        <th>Nombre de Producto </th>
+                                        <th class="text-center ">Cant. Bodega Central</th>
+                                        <th class="text-center ">Cant. Kiosco </th>
+                                        <th class="text-center ">K <span><i class="fa fa-arrow-circle-o-right"></i></span> BC</th>
+                                        <th class="text-center ">BC <span><i class="fa fa-arrow-circle-o-right"></i></span> K </th>
+                                        <th class="text-center "> Nueva Cantidad Bodega Central </th>
+                                        <th class="text-center "> Nueva Cantidad Kiosco </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let producto of listaProductosKiosco; let i = index" [attr.data-index]="i">
+                                        <td> <span> <small>{{producto.NombreProducto | capitalize }} </small> </span></td>
+                                        <td class=" text-center " [ngClass]="{'font-medium text-primary': transferirdeBC}"> {{producto.CantidadBodegaCentral}}</td>
+                                        <td class=" text-center  " [ngClass]="{'font-medium text-primary ': !transferirdeBC}"> {{producto.Cantidad}} </td>
+                                        <td class=" text-center ">
+                                            <input [attr.id_control]="producto.IdProducto " [disabled]="transferirdeBC " class="form-control text-center campo_inventario " name="AgregarCantidad " min="0 " max="9999 " #agregarCantidad (click)="agregarCantidad.select()
+                                            " [(ngModel)]="producto.AgregarCantidad " type="number " (blur)="agregarantidades(producto); " tabindex="3 " />
+                                        </td>
+                                        <td class=" text-center ">
+                                            <input [disabled]="!transferirdeBC " class="form-control text-center campo_inventario " name="NuevaCantidad " min="0 " max="9999 " #retirarCantidad [(ngModel)]="producto.RetirarCantidad " (click)="retirarCantidad.select()
+                                            " type="number " (blur)="retirarCantidades(producto); " tabindex="4 " />
+                                        </td>
+                                        <td class=" text-center ">
+                                            {{producto.NuevaCantidadBodegaCentral}}
+                                        </td>
+                                        <td class=" text-center ">
+                                            {{producto.NuevaCantidadKiosco}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-Inventario ">
+                    <div class="row m-1 pull-right ">
+                        <div class="col-12 ">
+                            <button *ngIf="transferirdeBC " (click)="abrirModalPlantillas() " class="btn btn-success m-r-5 ">Cargar  Plantilla</button>
+                            <button *ngIf="transferirdeBC " (click)="abrirModalGuardarPlantilla() " class="btn btn-warning m-r-5 ">Guardar Plantilla</button>
+                            <button *ngIf="!transferirdeBC " (click)="descargaPerecederos() " class="btn btn-danger m-r-5 ">Descargar Perecederos</button>
+                            <button (click)="transferir() " class="btn btn-primary ">Transferencia</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-carga-plantilla></app-carga-plantilla>
+<app-guardar-plantilla></app-guardar-plantilla>

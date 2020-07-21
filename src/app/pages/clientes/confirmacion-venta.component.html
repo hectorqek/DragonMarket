@@ -1,0 +1,97 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="container">
+        <div class="col-12">
+            <div id="print-section" class="printableArea">
+                <div class="card card-body printableArea" id="confirmacionVenta" #confirmacionVenta *ngFor="let datos of confirmacionRecarga">
+                    <h3><b>Recibo de Recarga</b> <span class="pull-right"> </span></h3>
+                    <div class="row">
+                        <div class=" table-responsive" style="clear: both">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 15px;">
+                                            <p class="text-muted titulos">Recarga No.:</p>
+                                        </td>
+                                        <td style="height: 15px;">
+                                            <p class=" "><strong>{{datos.IdRecarga}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 15px;">
+                                            <p class="text-muted titulos">Fecha Recarga:</p>
+                                        </td>
+                                        <td style="height: 15px;">
+                                            <p class=""><strong>{{datos.FechaRecarga}}</strong></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 15px;">
+                                            <p class="text-muted titulos">Estado:</p>
+                                        </td>
+                                        <td style="height: 15px;">
+                                            <p class="">{{datos.EstadoRecarga}}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="container ">
+                            <div class=" table-responsive" style="clear: both; " *ngFor="let detalle of datos.Clientes; let i= index ">
+                                <hr>
+                                <div class="card-header"><b> Cliente: </b> {{detalle.Nombre}}</div>
+                                <div class="card-header"><b> Identificación Cliente: </b> {{detalle.IdCliente}}</div>
+                                <table class="table table-bordered ">
+                                    <thead class="">
+                                        <tr>
+                                            <th>
+                                                <small>Bolsillo</small>
+                                            </th>
+                                            <th>
+                                                <small>Saldo Inicial</small>
+                                            </th>
+                                            <th>
+                                                <small>Valor Recarga</small>
+                                            </th>
+
+                                            <th>
+                                                <small>Nuevo Saldo</small>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let info of detalle.Bolsillos ">
+                                            <td>
+                                                <span class="label " [ngClass]="(info.NombreBolsillo=='Cafetería' )? 'label-success': 'label-warning' "><i class="fa m-r-5 " [ngClass]="(info.NombreBolsillo=='Cafetería' )? ' fa-shopping-cart': 'fa-check' "></i>{{info.NombreBolsillo}}</span>
+                                            </td>
+                                            <td>{{info.SaldoInicial | currency:'USD':'symbol':'3.0'}}</td>
+                                            <td>{{info.ValorRecargaBolsillo | currency:'USD':'symbol':'3.0'}}</td>
+                                            <td>{{info.SaldoFinal | currency:'USD':'symbol':'3.0'}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h3 class="text-center legal"><b>Total Recarga :</b> {{datos.TotalRecarga | currency:'USD':'symbol':'3.0'}}</h3>
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        <div class="text-center m-t-30 ">
+            <button class="btn  btn-success m-r-15" [hidden]="verBotonConsulta" type="button " (click)="Regresar() "> <span><i class="fa fa-search "></i> Regresar a Consultar Cliente</span> </button>
+
+            <button id="print " class="btn btn-primary " type="button " (click)="Imprimir()"> <span><i class="fa fa-print "></i> Imprimir Recibo</span> </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="row ">
+    <div class="col-12">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3>Redistribución de Saldos</h3>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body ">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody *ngFor="let responsable of responsableDatos">
+                            <tr class="bg-primary">
+                                <th colspan="5" class="p-10">
+                                    <h5 class="m-b-0 text-white text-left">{{ responsable.NombreCliente}} {{responsable.ApellidoCliente}} <span class="m-b-0 text-white pull-right"> Cliente No. {{responsable.IdCliente}} </span></h5>
+                                </th>
+                            </tr>
+                            <tr class="thead-DragonMarket ">
+                                <th class="text-center ">
+                                    <span class="text-muted ">Bolsillo</span>
+                                </th>
+                                <th class="text-center "><span class="text-muted">Saldo Actual</span> </th>
+                                <th class="text-center "><span class="text-muted">(-)</span></th>
+                                <th class="text-center "><span class="text-muted">(+)</span></th>
+                                <th class="text-center "><span class="text-muted">Saldo Final</span></th>
+                            </tr>
+                            <tr *ngFor="let bolsillo of responsable.Bolsillos">
+                                <td class="text-center">{{bolsillo.NombreBolsillo}}</td>
+                                <td class="text-center">{{bolsillo.Saldo | currency:'USD':'symbol':'3.0'}}</td>
+                                <td class="text-center ">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i [ngClass]="(bolsillo.Valorless < 0)?'fa fa-warning text-danger':''"></i>
+                                        </div>
+                                        <input [disabled]="bolsillo.Saldo == 0" class="form-control text-center redistribucion-saldo" [(ngModel)]="bolsillo.Valorless" type="number" [min]="0" [max]="100000000" [step]="1000" pattern="^[0-9]+" tabindex="1" #valorless (click)="valorless.select()"
+                                            (blur)="sumavaloresless(); calcularsumaSaldoFinal(bolsillo)" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) ||  (event.charCode == 46 && event.charCode == 44)  || event.charCode == 0 " />
+                                    </div>
+                                </td>
+                                <td class=" text-center ">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i [ngClass]="(bolsillo.Valorplus < 0)?'fa fa-warning text-danger':''"></i>
+                                        </div>
+                                        <input class="form-control text-center redistribucion-saldo" [(ngModel)]="bolsillo.Valorplus" type="number" [min]="0" [max]="100000000" [step]="1000" pattern="^[0-9]+" tabindex="1" #valorplus (click)="valorplus.select()" (blur)="sumavaloresplus(); calcularsumaSaldoFinal(bolsillo)"
+                                            onClick="this.setSelectionRange(0, this.value.length)" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) ||  (event.charCode == 46 && event.charCode == 44)  || event.charCode == 0 " />
+                                    </div>
+                                </td>
+                                <td class="text-center ">{{bolsillo.SaldoFinal | currency:'USD':'symbol':'3.0'}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-light text-dark ">
+                            <tr class=" ">
+                                <th class="text-center "></th>
+                                <th class="text-center ">
+                                    <span class="text-dark bold ">Total Saldo Actual</span>
+                                </th>
+                                <th class="text-center "><span>Total (-)</span></th>
+                                <th class="text-center "><span>Total (+)</span></th>
+                                <th class="text-center "><span>Total Saldo Final</span></th>
+                            </tr>
+                            <tr>
+                                <td class="text-center "></td>
+                                <td class="text-center "><span>{{sumaSaldoActual | currency:'USD':'symbol':'3.0'}}</span></td>
+                                <td class="text-center "><span>{{sumaless | currency:'USD':'symbol':'3.0'}}</span></td>
+                                <td class="text-center "><span>{{sumaplus | currency:'USD':'symbol':'3.0'}}</span></td>
+                                <td class="text-center "><span>{{sumaSaldoFinal | currency:'USD':'symbol':'3.0'}}</span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-12 text-center p-t-20 ">
+                <button type="button " class="btn waves-effect waves-light btn-lg btn-warning " (click)='consultaBilletera()'>Limpiar </button>
+                <button type="button " class="btn waves-effect waves-light btn-lg btn-primary " (click)='redistribuirSaldo(sumaless,sumaplus)'>Redistribuir </button>
+            </div>
+        </div>
+    </div>
+</div>

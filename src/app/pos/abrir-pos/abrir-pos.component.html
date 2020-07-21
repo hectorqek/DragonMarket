@@ -1,0 +1,70 @@
+<app-header>
+</app-header>
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Bienvenidos al POS <b> {{nombrePOS}} </b> </h3>
+                    <div id="Abrir">
+                        <div class="row">
+                            <div class="col-12 p-b-10">
+                                <div class="col-12 text-left ">
+                                    <small> <b> Actualmente el POS no se encuentra abierto por favor siga los siguientes pasos: </b></small><br>
+                                    <small>1. Por favor presione el boton Abrir</small><br>
+                                    <small>2. Seleccione el menu para iniciar el POS: (Recuerde este menu no podra ser modificado una vez seleccionado, hasta el inicio de un nuevo Periodo de Trabajo)</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-12 ">
+                                <button class="btn col-12 m-2 btn-primary btn-lg text-center" (click)="seleccionAbrir()">Abrir POS </button>
+                            </div>
+                            <div class="col-4 " *ngFor="let item of menu; let i = index ">
+                                <button class="btn col-12 m-2 btn-dribbble btn-lg text-center " (click)="seleccionAbrirMenuPOS(item.IdMenu) ">
+                                    {{item.NombreMenu }}
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="Continuar" *ngIf="POSAbierto">
+                        <div class="row ">
+                            <div class="col-12 text-center m-b-10 ">
+                                <div class="p-10">
+                                    <button class="btn btn-warning btn-lg" (click)="continuarSesion()">Continuar con Sesión</button><br/>
+                                    <hr>
+                                    <small class="text-muted p-t-10">Usted ya cuenta con una Sesión abierta en este POS, para iniciar una nueva sesión debe cerrer el periodo de trabajo activo </small>
+                                    <h3>Datos Sesión</h3>
+                                    <small class="text-muted">Nombre POS </small>
+                                    <h6>{{infoPOS?.NombrePos}}</h6>
+                                    <small class="text-muted p-t-10 db">Fecha Apertura</small>
+                                    <h6>{{infoPOS?.FechaInicio}} </h6>
+                                    <small class="text-muted p-t-10 db">Estado POS</small>
+                                    <h6>{{infoPOS?.Estado}} - {{infoPOS?.IdPeriodoTrabajo}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="mostrarFooter" class="footer">
+    <div class="row">
+        <div class="col-6 text-center">
+            <small>Nombre POS: {{infoPOS.NombrePos}} - Id PeriodoTrabajo: {{infoPOS.IdPeriodoTrabajo}}  - Estado: {{infoPOS.Estado}}</small>
+        </div>
+        <div class="col-6 text-right">
+            <button class="btn btn-info waves-effect waves-light" (click)="cerrarPOS(infoPOS.IdPeriodoTrabajo)" type="button"><span class="btn-label"><i class="fa fa-lock"></i></span>Cerrar Periodo de Trabajo</button>
+        </div>
+    </div>
+</div>

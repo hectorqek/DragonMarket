@@ -1,0 +1,115 @@
+<app-header> </app-header>
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="m-b-5">
+                                        <h3 card="card-title">Recibo de Cierre Periodo Trabajo</h3>
+                                        <small>Recibo que muestra los movimientos registrados para en
+                      Kiosko para un periodo de trabajo determinado.</small
+                    >
+                  </div>
+                  <div class="row">
+                    <div class="col-12 m-b-10">
+                      <button
+                        (click)="imprimir()"
+                        class="btn btn-info waves-effect waves-light col-12"
+                        type="button"
+                      >
+                        <span class="btn-label"
+                          ><i class="fa fa-heart"></i></span
+                        >Imprimir Tirilla
+                      </button>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row">
+                    <div class="col-12">
+                      <h4>Información Cierre de Periodo</h4>
+                    </div>
+                  </div>
+                  <div
+                    id="print-section"
+                    class="printableArea"
+                    *ngFor="let info of TirillaCierre"
+                  >
+                    <div class="row">
+                      <div class="col-6">
+                        <p>
+                          <small class="text-muted">IdPeriodoTrabajo:</small> {{ info.IdPeriodoTrabajo }}
+                                        </p>
+                                        <p>
+                                            <small class="text-muted">NombrePos: </small> {{ info.NombrePos }}
+                                        </p>
+                                        <p>
+                                            <small class="text-muted">Usuario: </small
+                          >{{ info.Usuario }}
+                        </p>
+                        <p>
+                          <small class="text-muted">Tipo Cierre: </small
+                          >{{ info.Tirilla }}
+                        </p>
+                      </div>
+                      <div class="col-6">
+                        <p>
+                          <small class="text-muted">Fecha Inicio: </small> {{ info.FechaInicio }}
+                                        </p>
+                                        <p>
+                                            <small class="text-muted">Menu: </small
+                          >{{ info.Menu }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                      <table
+                        id="recibo-cierre "
+                        class="display nowrap table table-striped table-bordered"
+                        cellspacing="0 "
+                        width="100% "
+                      >
+                        <thead>
+                          <tr>
+                            <th>Producto</th>
+                            <th class="text-center">Und. Iniciales</th>
+                            <th class="text-center">Adiciones</th>
+                            <th class="text-center">Und. Vendidas</th>
+                            <th class="text-center">Und. Finales</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of info.DetalleTirilla">
+                            <td>{{ item.NombreProducto | capitalize }}</td>
+                            <td class=" text-center ">
+                              {{ item.CantidadInicial | number }}
+                            </td>
+                            <td class=" text-center ">
+                              {{ item.CantidadIngresos | number }}
+                            </td>
+                            <td class=" text-center ">
+                              {{ item.CantidadVendida | number }}
+                            </td>
+                            <td class=" text-center ">
+                              {{ item.SaldoFinal | number }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

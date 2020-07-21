@@ -1,0 +1,122 @@
+<div class="card">
+    <div class="card-body">
+        <h3>Ajuste de saldo a <b>Billetera</b> (Devoluciones)</h3>
+        <small>Realice la búsqueda del cliente, al cual desea realizar el ajuste de saldo mediante los siguientes criterios: <span class="text-muted">(Nombre, Apellido o Número de Identificación)</span></small>
+        <div class="Recarga p-30">
+            <div class=" login-box form-horizontal form-material">
+                <div class="form-group">
+                    <div class="consultaCliente">
+                        <div class="social-widget ">
+                            <div class="soc-header box-title bg-primary">
+                                <h4 class="text-white"> Buscar Clientes <i class="fa fa-search"></i> </h4>
+                            </div>
+                            <div class="soc-content consultaClienteCuerpo">
+                                <div class="input-group">
+                                    <input class="form-control text-center" type="text" [(ngModel)]="ClientName" (keyup)="buscarCliente(ClientName)" placeholder="Ingrese criterio de búsqueda" #buscar />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-result" *ngIf="flag">
+                        <ul class="list-group">
+                            <li *ngFor="let cliente of clients | async" class="list-group-item list-group-item-action flex-column">
+                                <div class="resultado_busqueda_cliente">
+                                    <img class="perfilImage d-flex mr-3" [src]="cliente.Imagen" />
+                                    <a (click)="seleccionarClienteBolsillo(cliente.IdCliente)">{{cliente.NombreCompleto}}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngFor=" let cliente1 of infoCliente">
+        <div *ngFor=" let cliente of cliente1.Clientes">
+            <div class="text-center">
+                <h3> Por favor seleccione un Bolsillo: </h3>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="radio-list">
+                                <label class="custom-control custom-radio" *ngFor="let bolsillo of cliente.Bolsillos">
+                                            <input name="radio" #bolsillos
+                                            type="radio" id="bolsillo.IdBolsillo" 
+                                            value="bolsillo.IdBolsillo" class="custom-control-input"                                             
+                                            (click)="Valor(bolsillo.IdBolsillo); bolsilloUsuario(cliente.IdCliente, bolsillo.IdBolsillo)" >
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description">{{bolsillo.NombreBolsillo}}</span>
+                                          </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngFor=" let cliente1 of infoClienteBilletera">
+    <div *ngFor=" let cliente of cliente1.Clientes">
+        <div class="card">
+            <div class="card-header card-no-border " [ngClass]="(cliente.TotalSaldoBolsillos==0)?'bg-warning':'bg-primary'">
+                <div class="row">
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white">{{ cliente.NombreCliente}} {{cliente.ApellidoCliente}}</h4>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white text-center"> Cliente No. {{cliente.IdCliente}} </h4>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white"> <span class="text-center p-r-20">Saldo Total Actual:
+                {{cliente.TotalSaldoBolsillos | currency:'USD':'symbol':'3.0'}}</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-1">
+                        <h4 class="card-title  ">
+                            <img class="img-thumbnail " [src]="cliente.ImagenCliente " alt="{{ cliente.ImagenCliente }} " /> </h4>
+                    </div>
+                    <div class="col-11">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Bolsillo</th>
+                                        <th class="text-center">Saldo Actual</th>
+                                        <th class="text-center">Valor Ajuste</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let bolsillo of cliente.Bolsillos ">
+                                    <tr *ngIf="bolsillo.IdBolsillo === this.BolsilloSeleccionado">
+                                        <td>{{bolsillo.NombreBolsillo}}</td>
+                                        <td class="text-center ">{{bolsillo.Saldo | currency:'USD':'symbol':'3.0'}}</td>
+                                        <td class="text-center ">
+                                            <input class="form-control text-center" name="Recarga" [(ngModel)]="bolsillo.ValorAjuste" type="number" [min]="0" [max]="1000000" [step]="1000" pattern="^[0-9]+" #Recarga tabindex="1" (blur)="calcularValorTotalAjuste(bolsillo)" />
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="bolsillo.IdBolsillo === this.BolsilloSeleccionado">
+                                        <td colspan=3>
+                                            <div class="form-group ">
+                                                <label for="exampleInputPassword1 ">Nota Crédito</label>
+                                                <textarea maxlength="500" class="form-control input-lg " required name="Recarga " tabindex="2" [(ngModel)]="bolsillo.Nota "></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center p-b-20">
+                    <h3>Valor Total Ajuste <b><span [ngClass]="(this.sumaTotal >= 0)?'':'text-danger'">{{sumaTotal | currency:'USD':'symbol':'3.0'}} </span></b> </h3> <input type="button" [disabled]="this.sumaTotal <= 0" class="btn btn-facebook" (click)="devolucionSaldo(infoClienteBilletera, this.sumaTotal)"
+                        Value="Devolver" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

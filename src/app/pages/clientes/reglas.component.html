@@ -1,0 +1,54 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+    <div class="col-12">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3>Notificaciones y Reglas</h3>
+            </div>
+        </div>
+        <div class=" card ">
+            <div class="card-body ">
+                <div class="table-responsive ">
+                    <table class="table">
+                        <tbody *ngFor=" let cliente of notificiacionReglas">
+                            <tr class="bg-primary">
+                                <th colspan="3">
+                                    <h5 class="m-b-0 text-white text-left">{{ cliente.NombreCliente}} {{cliente.ApellidoCliente}}</h5>
+                                </th>
+                                <th>
+                                    <h5 class="m-b-0 text-white text-left">Cliente No. {{cliente.IdCliente}}</h5>
+                                </th>
+                            </tr>
+                            <ng-container *ngFor="let bolsillo of cliente.Bolsillos ">
+                                <tr class="table-active">
+                                    <td colspan="4">
+                                        <h4 class="bold ">{{bolsillo.NombreBolsillo}}</h4>
+                                    </td>
+                                </tr>
+                                <tr class="bg-light-info">
+                                    <td class="">Regla</td>
+                                    <td class="text-center ">Activar/Desactivar</td>
+                                    <td class="text-center ">Valor</td>
+                                    <td class="text-center ">Guardar</td>
+                                </tr>
+                                <tr *ngFor="let reglas of bolsillo.Reglas ">
+                                    <td class="">{{reglas.NombreRegla}}</td>
+                                    <td class="text-center">
+                                        <ui-switch size="small" [(ngModel)]="reglas.EstadoRegla"></ui-switch>
+                                    </td>
+                                    <td class="text-center ">
+                                        <input class="form-control text-center redistribucion-saldo" [(ngModel)]="reglas.MontoItem" type="number" [min]="0" [max]="10000000" [step]="1000" pattern="^[0-9]+" tabindex="1" #valor (click)="valor.select()" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) ||  (event.charCode == 46 || event.charCode == 44)  || event.charCode == 0 "
+                                        />
+                                    </td>
+                                    <td class="text-center ">
+                                        <button type="button" class="btn btn-primary btn-xs" (click)="actualizarNotificacion(cliente.IdCliente, bolsillo.IdBolsillo, reglas.IdRegla, reglas.MontoItem, reglas.EstadoRegla)"><i class="fa fa-save"></i> </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

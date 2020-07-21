@@ -1,0 +1,5 @@
+<ul class="list-group">
+    <li class="list-group-item btn-group-lg btn-dropbox text-center waves-effect btn-categorias" *ngFor=" let categoria of categorias " (click)="seleccionCategoria(categoria.IdCategoria)">
+        {{categoria.NombreCategoria}}
+    </li>
+</ul>

@@ -1,0 +1,18 @@
+<div class="card btn-producto datos-cliente" *ngFor=" let datos of cliente">
+    <div class="card-body-pos">
+        <div class="row ">
+            <div class="col-lg-2 align-middle ">
+                <img [src]="datos.Foto | sinfoto" width="80" />
+            </div>
+            <div class="col-lg-10 ">
+                <h5 class="card-title m-t-10 text-center ">{{datos.Nombres}} {{datos.Apellidos}}</h5>
+                <h6 class="card-subtitle text-center ">Cuenta Número: {{datos.IdCliente}}</h6>
+                <div class="row text-center justify-content-md-center ">
+                    <h3 class="text-center ">
+                        <font class="font-medium ">{{datos.Saldo | currency:'USD':'symbol':'3.0'}}</font>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

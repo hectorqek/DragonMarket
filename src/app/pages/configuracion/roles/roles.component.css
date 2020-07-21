@@ -1,0 +1,52 @@
+.titulo {
+    margin-top: -32px;
+    margin-left: 10px;
+    padding: 0px 10px;
+    margin-bottom: 20px;
+}
+
+.tabla-registros {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
+.search-result-p {
+    max-height: calc(80vh - 210px);
+}
+
+.search-result-p::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.search-result-p::-webkit-scrollbar:vertical {
+    width:14px;
+}
+
+/* .search-result-p::-webkit-scrollbar-button:increment,.search-result-p::-webkit-scrollbar-button {
+    display: block;
+}  */
+
+.search-result-p::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.search-result-p::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.search-result-p::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+/* .tabla-registros tbody {
+    display: block;
+    height: 300px;
+    width: 100%;
+    overflow-y: scroll;
+} */
+
+
+/* .tabla-registros thead, .tabla-registros tbody { 
+    display: block; 
+} */

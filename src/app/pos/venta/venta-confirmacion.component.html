@@ -1,0 +1,59 @@
+<div id="confirmacion-venta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title text-white">Confirmación Venta</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="cerrarModal()" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="print-section" class="printableArea">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="infoCliente" class="text-center">
+                                <div *ngFor="let dato of cliente">
+                                    <h3><b class="text-danger">{{dato.Nombres}} {{dato.Apellidos}}</b></h3>
+                                    <p>Número Cliente: {{dato.IdCliente}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-md-12">
+                            <div class="table-responsive m-t-20" style="clear: both;">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Precio Venta</th>
+                                            <th class="text-center">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of venta; let i = index">
+                                            <td>{{item.Nombre | capitalize}}</td>
+                                            <td class="text-center">{{item.Cantidad}}</td>
+                                            <td class="text-center">{{item.PrecioVenta}}</td>
+                                            <td class="text-center">{{item.PrecioVenta * item.Cantidad | currency:'USD':'symbol':'3.0' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="m-t-30 text-center">
+                                <h3><b>Total Venta :</b> {{ventaTotal | currency:'USD':'symbol':'3.0' }}</h3>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger  waves-effect btn btn-primary" (click)="cerrarModal()" data-dismiss="modal">Cancelar</button>
+                <br/>
+                <button type="button" class="btn btn-success waves-effect waves-light" [disabled]="deshabilitarBoton" (click)="pagar()"> <span><i class="fa fa-print"></i> Pagar </span></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="row no-gutters ">
+    <div class="col-4 btn-producto-test" *ngFor="let producto of productos | filtroCategoria: 'IdCategoria' : categoriaSeleccionada ; let i = index ">
+        <div class="card btn-producto" (click)="agregarAVenta(producto)">
+            <div class="card-body-pos text-center">
+                <img class="card-img-top" [src]="producto.Imagen | sinfoto" alt="{{ producto.Nombre }} " />
+                <div class="row card-principal no-gutters">
+                    <div class="card-producto-titulo">
+                        <small class="card-title">{{producto.Nombre | capitalize }}</small><br/>
+                        <small class="precio">{{producto.PrecioVenta | currency:'USD':'symbol':'3.0'}}</small>
+                    </div>
+                    <div class="card-producto-cantidad">
+                        <div class="p-t-10">
+                            <div *ngIf="producto.Cantidad == 0">
+                                <span class="badge badge-pill badge-danger">{{producto.Cantidad}}</span>
+                            </div>
+                            <div *ngIf="producto.Cantidad > 0">
+                                <span class="badge badge-pill badge-info">{{producto.Cantidad}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

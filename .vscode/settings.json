@@ -1,0 +1,6 @@
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "git.ignoreLimitWarning": true,
+    "appService.defaultWebAppToDeploy": "None",
+    "vetur.format.defaultFormatter.ts": "vscode-typescript"
+}

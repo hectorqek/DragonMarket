@@ -1,0 +1,127 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="card">
+    <div class="card-body">
+        <h3>Bienvenidos a nuestro servicio de recarga en línea </h3>
+        <div class="alert alert-info">
+            <small class="text-info"><i class="fa fa-exclamation-circle"></i> Recuerde: El valor mínimo de una recarga es:  <b>{{topeMin |currency:'USD':'symbol':'3.0'}}</b> y el valor máximo de una recarga es: <b>{{topeMax |currency:'USD':'symbol':'3.0'}}</b></small>
+        </div>
+    </div>
+</div>
+<div *ngFor="let responsable of responsableDatos">
+    <div *ngFor=" let cliente of infoCliente">
+        <div class=" card ">
+            <div class="card-header card-no-border " [ngClass]="(cliente.TotalSaldoBolsillos==0)?'bg-warning':'bg-primary'">
+                <div class="row">
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white">{{ cliente.NombreCliente}} {{cliente.ApellidoCliente}}</h4>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white text-center"> Cliente No. {{cliente.IdCliente}} </h4>
+                    </div>
+                    <div class="col-4">
+                        <h4 class="m-b-0 text-white"> <span class="text-center p-r-20">Saldo Total Actual: {{cliente.TotalSaldoBolsillos |  currency:'USD':'symbol':'3.0'}}</span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body ">
+                <div class="row">
+                    <div class="col-1">
+                        <h4 class="card-title  ">
+                            <img class="img-thumbnail " [src]="cliente.ImagenCliente " alt="{{ cliente.ImagenCliente }} " /> </h4>
+                    </div>
+                    <div class="col-11">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Bolsillo</th>
+                                        <th class="text-center">Saldo Actual</th>
+                                        <th class="text-center">Valor Recarga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let bolsillo of cliente.Bolsillos ">
+                                        <td>{{bolsillo.NombreBolsillo}}</td>
+                                        <td class="text-center ">{{bolsillo.Saldo | currency:'USD':'symbol':'3.0'}}</td>
+                                        <td class="text-center ">
+                                            <input class="form-control campo_recarga text-center" onfocus="this.value=''" name="Recarga" [(ngModel)]="bolsillo.ValorRecarga" type="number" [min]="topeMin" [max]="topeMax" [step]="1000" pattern="^[0-9]+" #Recarga (input)="actualizarValorTotal(responsable)"
+                                                (blur)="actualizarValorTotal(responsable)" tabindex="1" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button (click)="cliente.ConsultarHistorico = !cliente.ConsultarHistorico" target="_new" class="btn btn-linkedin waves-effect waves-light m-b-20"><span class="btn-label"><i class="fa fa-bar-chart-o"></i></span>Consultar Historicos</button>
+                    <div *ngIf="cliente.ConsultarHistorico" class="card">
+                        <div class="card-body">
+                            <h5>Por favor seleccione una fecha inicio y fin para consultar</h5>
+                            <div class="seleccion-fechas">
+                                <div class="fechas">
+                                    <p class="fechas">Fecha Inicio</p>
+                                    <input type="date" [value]="10-08-2018 " [(ngModel)]="fechaInicio" />
+                                </div>
+                                <div class="fechas">
+                                    <p class="fechas">Fecha Fin</p>
+                                    <input type="date" value="fechaFin" [(ngModel)]="fechaFin" />
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="botones-centrados">
+                                        <button [disabled]="fechaInicio == null || fechaFin == null" (click)="consultaHistorico('Rpt_ExtractoDeCuentaPadre', cliente.IdCliente)" target="_new" class="btn btn-linkedin waves-effect waves-light m-r-5 botones-centrados-item-1 "><span class="btn-label"><i class="fa fa-bar-chart-o"></i></span>Extracto de Cuenta</button>
+                                        <button [disabled]="fechaInicio == null || fechaFin == null" (click)="consultaHistorico('Rpt_ConsumosXConsumidor', cliente.IdCliente)" class="btn btn-linkedin waves-effect waves-light botones-centrados-item-2"><span class="btn-label"><i class="fa fa-bar-chart-o"></i></span>Consumos</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div [hidden]="!verResumenRecarga" class="card">
+        <div class="card-body ">
+            <div class="row" *ngIf="!pendienteTransaccion">
+                <div class="col-6 ">
+                    <div class="card-body ">
+                        <h4 class="box-title pull-right vm ">Valor Recarga: <b>{{SumaRecarga | currency:'USD':'symbol':'1.0'}}</b></h4>
+                    </div>
+                </div>
+                <div class="col-4 ">
+                    <button class=" btn btn-lg btn-primary " [attr.disabled]="SumaRecarga <=0 ? true : null " (click)='recarga(responsable, SumaRecarga, "PSE", "TDC")' tabindex="1 "> PSE</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="pendienteTransaccion">
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <span> En este momento hay una recarga en estado pendiente por lo que no se permite realizar nuevas recargas </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="medio-pago" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="medio-pago" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title text-white">Medio de Pago</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Seleccione el medio de pago a utilizar</p>
+                    <hr>
+                    <div *ngFor="let medio of MedioPago">
+                        <button class="btn btn-block btn-lg mb-2 mt-2" [ngClass]="medio.clase" (click)='recarga(responsableDatos, SumaRecarga, "EFE", medio.abrv)'>{{medio.nombreMedioPago}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

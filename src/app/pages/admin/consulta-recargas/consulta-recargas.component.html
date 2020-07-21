@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-body">
+      <h3>Historial de Transacciones</h3>
+      <small>Realice la búsqueda del usuario, al cual desea realizar la consulta de transacciones mediante los siguientes criterios:  <span class="text-muted">(Nombre, Apellido o Número de Identificación)</span></small>
+      <div class="Recarga p-30">
+          <div class=" login-box form-horizontal form-material">
+              <div class="form-group">
+                  <div class="consultaCliente">
+                      <div class="social-widget ">
+                          <div class="soc-header box-title bg-primary">
+                              <h4 class="text-white"> Buscar usuario <i class="fa fa-search"></i> </h4>
+                          </div>
+                          <div class="soc-content consultaClienteCuerpo">
+
+                              <div class="input-group">
+                                  <input class="form-control text-center" type="text" [(ngModel)]="ClientName" (keyup)="buscarCliente(ClientName)" placeholder="Ingrese criterio de búsqueda" #buscar />
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="search-result" *ngIf="flag">
+                      <ul class="list-group">
+                          <li *ngFor="let cliente of clients | async" class="list-group-item list-group-item-action flex-column">
+                              <div class="resultado_busqueda_cliente">
+                                  <img class="perfilImage d-flex mr-3" [src]="cliente.Imagen" />
+                                  <a (click)="seleccionarUsuario(cliente.IdClienteResponsable)">{{cliente.NombreCompleto}}</a>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="card">
+      <div class="card-body">
+          <div class="col-12">
+              <h3 card="card-title">Historial de Recargas</h3>
+              <!-- <small>Consulte el historial de las últimas recargas realizadas, de todos los usuarios</small> -->
+          </div>
+          <hr>
+          <div class="table-responsive">
+            <div class="card">
+              <div class="card">
+                  <div class="card-body">
+                      <!-- <h3 card="card-title">Historial Transacciones</h3>
+                      <h6 class="card-subtitle mb-2 text-muted">Consulte el historial de las últimas recargas realizadas</h6> -->
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                      <th class="text-center">No. Recarga</th>
+                                      <th class="text-center">Fecha Recarga</th>
+                                      <th class="text-center">Valor</th>
+                                      <th class="text-center">Estado</th>
+                                      <th class="text-center">Tipo Recarga</th>
+  
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let item of historialTransaccion">
+                                      <td class="text-center">{{item.IdRecarga}}</td>
+                                      <td class="text-center">{{item.FechaRecarga}}</td>
+                                      <td class="text-center">{{item.Valor | currency:'USD':true:'3.0'}}</td>
+                                      <td class="text-center"><span class="label" [class.label-danger]="item.Estado  === 'RECHAZADA'" [class.label-success]="item.Estado === 'APROBADA'" [class.label-megna]="item.Estado === 'PENDIENTE'" [class.label-warning]="item.Estado === 'PorConfirmar'"
+                                              [class.label-warning]="item.Estado === 'FALLIDA'" [class.label-primary]="item.Estado === 'CREADA'" [class.label-light-danger]="item.Estado === 'EXPIRADA'">{{item.Estado}}</span><br>
+                                          <small *ngIf="(item.Estado === 'APROBADA' && item.TipoRecarga === 'Electrónico')  || item.Estado === 'RECHAZADA' ">CUS-{{item.TrazabilityCode}}</small>
+                                      </td>
+                                      <td class="text-center"><i class="fa" [ngClass]="(item.TipoRecarga === 'Electrónico')?'fa-credit-card':'fa-money'">
+                                        </i><span class="m-l-5">{{item.TipoRecarga}}</span></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>          </div>
+      </div>
+  </div>

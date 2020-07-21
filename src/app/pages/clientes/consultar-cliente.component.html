@@ -1,0 +1,34 @@
+<div class="card-body">
+    <h3>Recargas de Saldo a Billetera Medio <b>Local</b> </h3>
+    <small>Realice la búsqueda del cliente a recarga mediante los siguientes criterios: <span class="text-muted">(Nombre, Apellido o Número de Identificación)</span></small>
+    <div class="Recarga p-30">
+        <div class=" login-box form-horizontal form-material">
+            <div class="form-group">
+                <div class="consultaCliente">
+                    <div class="social-widget ">
+                        <div class="soc-header box-title bg-primary">
+                            <h4 class="text-white"> Buscar Clientes <i class="fa fa-search"></i> </h4>
+                        </div>
+                        <div class="soc-content consultaClienteCuerpo">
+
+                            <div class="input-group">
+                                <input class="form-control text-center" type="text" [(ngModel)]="ClientName" (keyup)="buscarCliente(ClientName)" placeholder="Ingrese criterio de busqueda" #buscar/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-block btn-lg btn-googleplus btn-rounded" (click)="reImprimir()" type="submit ">Reimprimir último recibo</button>
+                <div class="search-result" *ngIf="flag">
+                    <ul class="list-group">
+                        <li *ngFor="let cliente of clients | async" class="list-group-item list-group-item-action flex-column">
+                            <div class="resultado_busqueda_cliente">
+                                <img class="perfilImage d-flex mr-3" [src]="cliente.Imagen | sinfoto" />
+                                <a (click)="seleccionarUsuario(cliente.IdCliente)">{{cliente.NombreCompleto}}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

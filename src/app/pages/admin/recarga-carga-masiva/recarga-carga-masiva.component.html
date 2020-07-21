@@ -1,0 +1,91 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<form (ngSubmit)="subirArchivoCargaMasiva(); formularioCargaMasiva.resetForm()" #formularioCargaMasiva="ngForm" novalidate="" autocomplete="off">
+    <div _ngcontent-c2="" class="row">
+        <div _ngcontent-c2="" class="col-12 ">
+            <div _ngcontent-c2="" class="row page-titles">
+                <div _ngcontent-c2="" class="col-md-5 align-self-center">
+                    <h3 _ngcontent-c2="">Carga Masiva de Recargas</h3>
+                </div>
+            </div>
+            <div _ngcontent-c2="" class="card ">
+                <div _ngcontent-c2="" class="card-body">
+                    <div class="row showcase_row_area">
+                        <div class="row col-12">
+                            <div class="col-md-12 col-md-12 showcase_text_area">
+                                <label>Archivo a cargar</label>
+                            </div>
+                        </div>
+                        <div class="row col-12">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input id="archivoCargaMasiva" type="file" class="form-control" accept=".xlsx" (change)="updateFileName($event.target.files)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2">
+                                <button type="button" tabindex="2" class="btn btn-info col-14 waves-effect waves-light" (click)="abrirModalCargarArchivo()"><i class="fa fa-upload"></i> Cargar
+                  Archivo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de confirmacion de subida de archivo -->
+    <div id="cargarArchivoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Esta Seguro que desea cargar el archivo {{fileName}}?
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-info waves-effect waves-light">
+                <span>Aceptar </span></button>
+                            <button (click)="cerrarModalCargarArchivo()" type="button" class="btn btn-info waves-effect waves-light ml-1">
+                <span>Cancelar </span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Tabla de Errores -->
+<div _ngcontent-c2="" class="card " *ngIf="mostarErrores">
+    <div _ngcontent-c2="" class="card-body table-responsive m-t-20" style="clear: both;">
+        <table id="tablaErrores" class="display nowrap table table-striped table-bordered" cellspacing="0 " width="100% ">
+            <thead>
+                <tr>
+                    <th class="text-center"><small><b>No. Fila</b></small></th>
+                    <th class="text-center"><small><b>Id Cliente</b></small> </th>
+                    <th class="text-center"><small><b>Error</b></small></th>
+                </tr>
+            </thead>
+            <tbody class="table-wrapper-scroll-y my-custom-scrollbar">
+                <tr *ngFor="let item of listadoErrores">
+                    <td>{{item.fila}}</td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.mensaje}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-12">
+                    <button (click)="cerrarErrorArchivo()" type="button" class="btn btn-info waves-effect waves-light ml-1">
+            <span>Cancelar</span></button>
+                    <button (click)="exportar()" type="button" class="btn btn-info waves-effect waves-light  ml-1">
+              <span>Decargar </span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

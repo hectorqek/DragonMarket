@@ -1,0 +1,109 @@
+<div id="editarItemVenta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header btn-dribbble">
+                <h4 class="modal-title text-white">Editar de Item Venta</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <form [formGroup]="frmItemVenta" #editarFormularioItemVenta="ngForm" (ngSubmit)="editarItemVenta()" novalidate=" ">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Nombre</label>
+                                <div class="col-4">
+                                    <input class="form-control " type="text " hidden="hidden" formControlName="IdItemVenta" name="IdItemVenta" required [(ngModel)]="idItemVenta">
+                                    <input class="form-control" type="text" placeholder="Nombre Item de Venta" minlength="3" maxlength="50" name="Nombre" formControlName="Nombre" [(ngModel)]="nombreItemVenta">
+                                </div>
+                                <label class="col-3 col-form-label">Activar/Desactivar</label>
+                                <div class="col-3">
+                                    <ui-switch formControlName="EstadoItemVenta" size="small" [(ngModel)]="estadoItemVenta"></ui-switch>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Precio Venta</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="number" minlength="1" maxlength="20" placeholder="0" name="PrecioVenta" formControlName="PrecioVenta" [(ngModel)]="precioVenta">
+                                </div>
+                                <label class="col-3 col-form-label">Precio Especial</label>
+                                <div class="col-4">
+                                    <input class="form-control" type="number" minlength="1" maxlength="20" placeholder="0" name="PrecioEspecial" formControlName="PrecioEspecial" [(ngModel)]="precioEspecial">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Precio Descuento</label>
+                                <div class="col-3">
+                                    <input class="form-control" type="number" minlength="1" maxlength="20" placeholder="0" name="PrecioDescuento" formControlName="PrecioDescuento" [(ngModel)]="precioDescuento">
+                                </div>
+                                <label class="col-3 col-form-label">Activar/Desactivar</label>
+                                <div class="col-4">
+                                    <ui-switch size="small" [checked]="false" checkedLabel="Sí" uncheckedLabel="No" name="EstadoDescuento" formControlName="EstadoDescuento" [(ngModel)]="estadoDescuento"></ui-switch>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-6 col-form-label">Productos asociados</label>
+                                <div class="col-12">
+                                    <ng-multiselect-dropdown [placeholder]="'Seleccionar Productos'" name="ProductosSeleccionados" [data]="productos" formControlName="ProductosSeleccionados" [(ngModel)]="productosSeleccionado" required [settings]="dropdownProductosSettings" (onDeSelect)="onDeSelect($event)"
+                                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)=" onDeSelectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-12 table-responsive ">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre Producto</th>
+                                                <th>Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of productosSeleccionadosconCantidad; let i = index ">
+                                                <td><span>{{item.NombreProducto}}</span></td>
+                                                <td><input class="form-control text-center" [(ngModel)]="item.Cantidad" [ngModelOptions]="{standalone: true}" type="number " [min]="0 " [max]="1000000 " [step]="1000 " pattern="^[0-9]+
+                                            " tabindex="1 " /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class=" form-group ">
+                                <label class="col-6 col-form-label ">Categoría asociadas</label>
+                                <div class="col-12 ">
+                                    <ng-multiselect-dropdown [placeholder]=" 'Seleccionar Categoria' " name="CategoriasSeleccionadas" [data]="categorias" formControlName="CategoriasSeleccionadas" [(ngModel)]="categoriasSeleccionada" [settings]="dropdownCategoriasSettings
+                                                        ">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-6 col-form-label ">Menú asociados</label>
+                                <div class="col-12 ">
+                                    <ng-multiselect-dropdown [placeholder]=" 'Seleccionar Menu' " name="MenusSeleccionados" [data]="menus" [(ngModel)]="menusSeleccionado" formControlName="MenusSeleccionados" [settings]="dropdownMenusSettings
+                                                        ">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 col-form-label " [hidden]="!nuevaImagen ">
+                        <img width="120 " height="120 " class=" " [src]="urlImagen | sinfoto " onError="this.src='assets/images/sinfoto.jpg' " />
+                    </div>
+                    <div class="row ">
+                        <div class="col-12 ">
+                            <image-upload [url]=" 'https://dragonmarketapi.sgs.edu.co/api/DocumentUpload?tipoImagen=dragonmarket' " [fileTooLargeMessage]=" 'Imagen Muy Pesada' " [clearButtonCaption]=" 'Limpiar' " [extensions]="[ 'jpeg', 'png', 'jpg'] " [max]="1
+                                                        " [buttonCaption]=" 'Seleccionar Foto' " [dropBoxMessage]=" 'Arrestre foto aquí!' " (removed)="onRemoved($event) " (uploadFinished)="onUploadFinished($event) " (uploadStateChanged)="onUploadStateChanged($event) ">
+                            </image-upload>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <div class="row ">
+                        <div class="col-12 ">
+                            <button type="submit " class="btn btn-block btn-lg btn-dribbble "> <span><i class="fa fa-save "></i> Editar Item de Venta </span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

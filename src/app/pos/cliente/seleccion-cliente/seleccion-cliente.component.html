@@ -1,0 +1,41 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<section id="wrapper" class="login-register " style="background-color: #fafafa">
+    <div class="login-box card m-t-40">
+        <div class="card-header bc-colored btn-info">
+            <h4 class="m-b-0 text-white">Bienvenidos</h4>
+        </div>
+        <div class="card-body">
+            <form #forma="ngForm" class="form-horizontal form-material" (ngSubmit)="ValidarCliente(idClienteInput.value)" validate="">
+                <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a>
+                <div class="card-body">
+                    <div class="alert alert-danger text-center" *ngIf="clienteInvalido">
+                        El Cliente ingresado No existe, intente nuevamente
+                    </div>
+                </div>
+                <h3 class="box-title m-t-40 m-b-20 text-center">Selección Cliente</h3>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input maxlength="12" id="identificacionCliente" name="identificacionCliente" class="form-control text-center" type="text" required placeholder="Identificacion Cliente" #idClienteInput required autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group text-center ">
+                    <div class="col-xs-12 p-b-20 ">
+                        <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit ">Entrar</button>
+                    </div>
+                </div>
+            </form>
+            <button class="btn btn-block btn-lg btn-googleplus btn-rounded" (click)="reImprimir()" type="submit ">Reimprimir último recibo</button>
+        </div>
+    </div>
+</section>
+<div class="footer">
+    <div class="row">
+        <div class="col-6 text-center">
+            <small>Nombre POS: {{infoPOS.NombrePos}} - Id PeriodoTrabajo: {{infoPOS.IdPeriodoTrabajo}}  - Estado: {{infoPOS.Estado}} - Menu: {{infoPOS.NombreMenu}}</small>
+        </div>
+        <div class="col-6 text-right">
+            <button class="btn btn-info waves-effect waves-light" (click)="cerrarPOS(infoPOS.IdPeriodoTrabajo)" type="button"><span class="btn-label"><i class="fa fa-lock"></i></span>Cerrar Periodo de Trabajo</button>
+        </div>
+    </div>
+</div>

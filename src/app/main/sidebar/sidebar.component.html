@@ -1,0 +1,37 @@
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li *ngFor="let menu of menuPrincipal">
+                    <a *ngIf="menu.PermisoRol === true" class="has-arrow waves-effect waves-dark" data-toggle="collapse" [href]="'#'+ menu.IdFuncionalidad" role="button" aria-expanded="false" aria-controls="menu.IdFuncionalidad">
+                        <i [class]="menu.HtmlId"></i>
+                        <span class="hide-menu">{{menu.NombreFuncionalidad}}</span>
+                    </a>
+                    <ul *ngIf="menu.MenuHijos.length >= 0" class="collapse bg bg-inverse" [id]="[menu.IdFuncionalidad]">
+                        <li *ngFor="let submenu of menu.MenuHijos">
+                            <div *ngIf="submenu.Tipo !== 'RPT'">
+                                <a *ngIf="submenu.PermisoRol" routerLinkActive="active" [routerLink]="[ submenu.Url ]">
+                                {{submenu.NombreFuncionalidad}}
+                            </a>
+                            </div>
+                            <div *ngIf="submenu.Tipo == 'RPT'">
+                                <a *ngIf="submenu.PermisoRol" routerLinkActive="active" href="{{submenu.Url}}" target="_blank">
+                                    <i class="fa fa-print"></i> {{submenu.NombreFuncionalidad}}
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+        <footer class="footer-version">
+            <p class="text-center"><small>Versión: {{this.version}}</small></p>
+        </footer>
+    </div>
+    <!-- End Sidebar scroll-->
+
+</aside>

@@ -1,0 +1,11 @@
+<div class="input-group">
+    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+    <input type="text" class="form-control" placeholder="Filtrar Item de Venta" (keyup)="buscarItemVenta(buscar.value)" #buscar>
+    <span id="searchclear" class="fa fa-times-circle-o" (click)="buscar.value=''; buscarItemVenta(buscar.value)"></span>
+</div>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let item of listaSeleccionada" (click)="seleccionItem(item) ">
+        <span>{{item.id}}</span> {{item.nombre}}
+    </li>
+</ul>

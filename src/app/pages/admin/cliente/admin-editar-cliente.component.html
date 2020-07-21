@@ -1,0 +1,90 @@
+ <app-loader [loader]="isLoading"> </app-loader>
+<div id="editarCliente" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+  style="display: none;">
+  <div class="modal-dialog modal-lg ">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h4 class="modal-title text-white">Editar Cliente </h4>
+        <button type="button" class="close" (click)="cerrarModalEditarCliente()" data-dismiss="modal">×</button>
+      </div>
+       <form [formGroup]="frmCliente" #editarFormularioCliente="ngForm" (ngSubmit)="editarCliente()" novalidate=" ">
+       <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label class="col-3 col-form-label">* Id. Cliente</label>
+                    <div class="col-3">
+                      <input disabled="true" class="form-control" type="text" placeholder="Identificación" minlength="5" maxlength="20"
+                        name="noIdentificacion" formControlName="noIdentificacion" [(ngModel)]="idCliente">                 
+                    </div>
+                    <label class="col-2 col-form-label">Estado</label>
+                    <div class="col-3">
+                      <ui-switch [checked]="true" checkedLabel="Activo" uncheckedLabel="Inactivo"
+                         name="estado" formControlName="estado" [(ngModel)]="estadoCliente">
+                      </ui-switch>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-3 col-form-label">* Nombres</label>
+                    <div class="col-3">
+                      <input class="form-control" type="text" minlength="2" maxlength="50" placeholder="Nombres"
+                        name="nombres" required formControlName="nombres" [(ngModel)]="nombre">                     
+                    </div>
+                    <label class="col-2 col-form-label">* Apellidos</label>
+                    <div class="col-3">
+                     <input class="form-control" minlength="2" maxlength="50" type="text" placeholder="Apellidos"
+                        name="apellido" required formControlName="apellido" [(ngModel)]="apellidoCliente">                       
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-3 col-form-label">* Tipo de Cliente</label>
+                    <div class="col-3">
+                      <select [(ngModel)]="defaultOption" formControlName="tipoCliente" class="form-control col-12"
+                        name="tipoIdentificacion" >
+                        <option [value]=null>Seleccione...</option>
+                        <option [value]="est.Valor" *ngFor="let est of dominio">{{est.Descripcion}}</option>
+                      </select>
+                    </div> 
+                    <label class="col-2 col-form-label">Celular</label>
+                    <div class="col-3">
+                      <input class="form-control" minlength="0" maxlength="100" type="text" placeholder="Celular"
+                        name="noCelular" required formControlName="noCelular" [(ngModel)]="celular">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-3 col-form-label">Precio Especial</label>
+                    <div class="col-3">
+                      <ui-switch [checked]="true" checkedLabel="Activo" uncheckedLabel="Inactivo"
+                         name="precioEspecial" formControlName="precioEspecial" [(ngModel)]="precioEspecialCliente">
+                      </ui-switch>
+                    </div>
+                  </div>
+                  <label class="col-3 col-form-label">Titulares</label>
+                    <div class="form-group ">
+                      <ng-multiselect-dropdown [placeholder]=" '(*) Seleccionar Titulares' " name="titularesSeleccionados "
+                        [data]="titulares" formControlName="TitularesSeleccionados" required [(ngModel)]="titularesSeleccionados" [settings]="dropdownTitularesSettings">
+                      </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-3 col-form-label " [hidden]="!nuevaImagen ">
+                      <img width="70 " height="104" class=" " [src]="'https://naranja.blob.core.windows.net/foto/' + urlImagen | sinfoto " onError="this.src='assets/images/sinfoto.jpg' " />
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <image-upload [url]=" 'https://dragonmarketapifun.sgs.edu.co/api/DocumentUpload?tipoImagen=foto' " [fileTooLargeMessage]=" 'Imagen Muy Pesada' " required [clearButtonCaption]=" 'Limpiar' " [extensions]="[ 'jpeg', 'png', 'jpg'] " [max]="1" [buttonCaption]=" 'Seleccionar Foto' " [dropBoxMessage]=" '!Arrastre foto aquí!' " (uploadFinished)="onUploadFinished($event)" (uploadStateChanged)="onUploadStateChanged($event)" (removed)="onRemoved($event)">
+                            </image-upload>
+                        </div> 
+                    </div> 
+                 </div> 
+               </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-block btn-lg btn-dribbble"><span><i class="fa fa-save"></i> Modificar Cliente </span></button>
+                    </div>
+                </div>
+            </div> 
+          </form> 
+        </div>
+      </div>
+    </div>

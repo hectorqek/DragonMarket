@@ -1,0 +1,38 @@
+<div class="card panel-primary resumen-venta">
+    <div class="card-body-pos resumen-body">
+        <div class="titulo-resumen-venta">
+            <span class="panel-title">Resumen de Venta</span>
+        </div>
+        <div class="item-resumen">
+            <ul class="list-group">
+                <li class="component-item-venta " *ngFor="let item of resumenVenta">
+                    <div class="row no-gutters resumen-item-venta">
+                        <div class="item">
+                            <span class="label label-info btn">{{item.Cantidad}}</span>
+                            <small> {{item.Nombre | capitalize}} </small>
+                        </div>
+                        <div class="precio">
+                            <div class="label label-info btn">{{item.PrecioVenta * item.Cantidad | currency:'USD':'symbol':'3.0' }}</div>
+                        </div>
+                        <div class="acciones">
+                            <button class="btn btn-success btn-sm" (click)="addItemVenta(item)">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                            <button class="btn btn-warning btn-sm" (click)="removeItemsVenta(item, 1)">
+                                <span class="fa fa-minus"></span>
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="removeItemsVenta(item, item.Cantidad)">
+                                <span class="fa  fa-trash-o"></span>
+                                </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-footer resumen-footer">
+        <h3><span class="label label-primary text-center">Total : {{ ventaTotal | currency:'USD':'symbol':'3.0' }} </span></h3>
+        <button class="btn btn-dropbox btn-lg btn-block" [disabled]="ventaTotal == 0" data-toggle="modal" (click)="validarSaldo() ">Pagar</button>
+        <button class="btn btn-danger btn-lg btn-block " (click)="clearCart() ">Cancelar</button>
+    </div>
+</div>

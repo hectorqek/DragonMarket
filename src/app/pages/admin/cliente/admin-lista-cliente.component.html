@@ -1,0 +1,60 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div class="row">
+  <div class="col-sm-12 col-md-5">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input autofocus="autofocus" id="inpText" type="text" class="form-control" placeholder="Ingrese la información del cliente a consultar"
+          #buscar (input)="onSearchChange($event.target.value)" (keydown)="onKeydown($event)">
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-2">
+    <div class="form-group">
+      <div class="input-group">
+        <select [(ngModel)]='nrSelect' class="form-control col-sm-8">
+          <option [value]="est.Id" *ngFor="let est of estadoCliente">{{est.Estado}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 col-md-2">
+    <button type="button" tabindex="2" class="btn btn-info col-12 waves-effect waves-light"
+      (click)="consultarCliente(buscar.value)" [disabled]="btnConsultar"> Consultar</button>
+  </div>
+  <div class="col-sm-2 col-md-2">
+    <button type="button" tabindex="2" class="btn btn-info col-12 waves-effect waves-light"
+      (click)="abrirModalCrearCliente()"><i class="fa fa-edit"></i> Crear</button>
+  </div>
+</div>
+
+<div [hidden]="tblListaCliente" class="table-responsive">
+    <table class="display nowrap table table-striped table-bordered inventario" cellspacing="0 " width="100% ">
+        <thead>
+            <tr>
+                <th class="text-center"><small><b>Foto</b></small></th>
+                <th class="text-center"><small><b>Id. Cliente</b></small> </th>
+                <th class="text-center"><small><b>Nombre        </b></small></th>
+                <th class="text-center"><small><b>Apellidos</b></small></th>
+                <th class="text-center"><small><b>Estado</b></small> </th>
+                <th class="text-center"><small><b>Editar</b></small></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cliente">
+                <td class="text-center">
+                    <img width="35" class="" [src]="item.Imagen | sinfoto" onError="this.src='assets/images/sinfoto.jpg' " />
+                </td>
+                <td>{{item.IdCliente}}</td>
+                <td>{{item.Nombre}}</td>
+                <td>{{item.Apellido}}</td>
+                <td>{{item.DescripcionEstado}}</td>
+                <td class=" text-center "><button type="button" class="btn btn-xs btn-primary" (click)="abrirModalEditarCliente(item.IdCliente)">Editar</button>
+                </td>               
+            </tr>
+        </tbody>
+    </table>
+</div>
+ <div *ngIf="cliente.length > 0">
+  <app-admin-editar-cliente #EditarCliente [clienteEditar]="clienteEditar"></app-admin-editar-cliente>
+</div>

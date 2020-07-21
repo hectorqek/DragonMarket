@@ -1,0 +1,67 @@
+<app-loader [loader]="isLoading"> </app-loader>
+<div id="crearProducto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title text-white">Crear Producto </h4>
+                <button type="button" class="close" (click)="cerrarModalCrearProducto()" data-dismiss="modal">×</button>
+            </div>
+            <form (ngSubmit)="crearProducto(formularioProducto); formularioProducto.resetForm()" #formularioProducto="ngForm" novalidate="" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row" [ngClass]="{'has-danger': (nombre.errors?.minlength || nombre.errors?.required) && nombre.touched }">
+                                <label class="col-2 col-form-label">Nombre</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" placeholder="Nombre" minlength="5" maxlength="50" name="Nombre" ngModel required #nombre="ngModel">
+                                    <div *ngIf="nombre.touched && !nombre.valid">
+                                        <div *ngIf="nombre?.errors?.required" class="form-control-feedback"> Este campo es requerido</div>
+                                        <div *ngIf="nombre?.errors?.minlength" class="form-control-feedback"> Este campo requiere minimo {{nombre?.errors.minlength.requiredLength}} caracteres</div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <a role="button" data-toggle="popover" data-trigger="focus" title="Nombre Producto" data-content="Ingrese Nombre Producto Ej. Empanadas" id="nombre" (click)="AbrirPopover( '#nombre' )"><i class="fa fa-warning"></i></a>
+                                </div>
+                            </div>
+                            <div class="form-group row" [ngClass]="{'has-danger': (sku.errors?.minlength || sku.errors?.required) && sku.touched }">
+                                <label class="col-2 col-form-label">SKU</label>
+                                <div class="col-8">
+                                    <input class="form-control" type="text" minlength="2" maxlength="20" placeholder="SKU" name="sku" ngModel #sku="ngModel">
+                                    <div *ngIf="sku.touched && !sku.valid">
+                                        <div *ngIf="sku?.errors?.minlength" class="form-control-feedback"> Este campo requiere minimo {{sku?.errors.minlength.requiredLength}} caracteres</div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <a role="button" data-toggle="popover" data-trigger="focus" title="Código SKU" data-content="Código SKU para contabilidad EJ. EM565S" id="sku" (click)="AbrirPopover( '#sku' )"><i class="fa fa-warning"></i></a>
+                                </div>
+                            </div>
+                            <div class="form-group row " [ngClass]="{'has-danger': (descripcion.errors?.minlength || descripcion.errors?.required) && descripcion.touched }">
+                                <label class="col-2 col-form-label">Descripción</label>
+                                <div class="col-8">
+                                    <textarea class="form-control" minlength="0" maxlength="100" type="text" placeholder="Descripcion" name="descripcion" ngModel required #descripcion="ngModel"> </textarea>
+                                    <div *ngIf="descripcion.touched && !descripcion.valid">
+                                        <div *ngIf="descripcion?.errors?.required" class="form-control-feedback"> Este campo es requerido</div>
+                                        <div *ngIf="descripcion?.errors?.minlength" class="form-control-feedback"> Este campo requiere minimo {{descripcion?.errors.minlength.requiredLength}} caracteres</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-2 col-form-label">Perecedero</label>
+                                <div class="col-8">
+                                    <ui-switch [checked]="false" checkedLabel="Sí" uncheckedLabel="No" (valueChange)="onValueChange($event)"></ui-switch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="!formularioProducto.valid" type="submit" class="btn btn-info waves-effect waves-light"> <span><i class="fa fa-save"></i> Crear Producto </span></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
