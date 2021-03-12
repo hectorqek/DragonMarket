@@ -38,7 +38,7 @@
         "file-saver": "^2.0.2",
         "jquery": "^3.4.1",
         "jshint": "^2.9.5",
-        "jspdf": "^1.4.1",
+        "jspdf": "^2.3.1",
         "ng-multiselect-dropdown": "^0.2.3",
         "ngx-loading": "^1.0.14",
         "ngx-sortable": "^1.0.1",
